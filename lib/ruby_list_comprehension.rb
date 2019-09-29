@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require 'benchmark'
 class ListComprehension
+  attr_accessor :cache, :caching
+  attr_reader :c, :version
 
-  attr_reader :c, :version, :cache, :caching
   def [](*args)
     c[*args]
   end
