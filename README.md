@@ -1,6 +1,9 @@
 # Ruby_List_Comprehension
 ## Part of a proposal to add Ruby list comprehension syntax, your feedback is appreciated!
+## Ruby Tracker Feature request page
 ### https://bugs.ruby-lang.org/issues/16147 
+## Ruby Gem home
+### https://rubygems.org/gems/ruby_list_comprehension
 ### gem install ruby_list_comprehension
 # 
 ### in IRB 
