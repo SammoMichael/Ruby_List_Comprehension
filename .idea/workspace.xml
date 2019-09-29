@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e12fec72-8147-4e30-b53e-c497388b4e62" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ruby_list_comprehension_tests.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ruby_list_comprehension_tests.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +58,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Ruby.benchmark">
+  <component name="RunManager" selected="Ruby.ruby_list_comprehension_tests">
     <configuration name="benchmark" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
       <module name="RubyListComprehension" />
       <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="" />
@@ -112,8 +115,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Ruby.benchmark" />
         <item itemvalue="Ruby.ruby_list_comprehension_tests" />
+        <item itemvalue="Ruby.benchmark" />
         <item itemvalue="Ruby.ruby_list_comprehension" />
       </list>
     </recent_temporary>
@@ -132,7 +135,7 @@
       <workItem from="1569623678298" duration="3794000" />
       <workItem from="1569680245122" duration="8520000" />
       <workItem from="1569691328651" duration="547000" />
-      <workItem from="1569709516234" duration="14280000" />
+      <workItem from="1569709516234" duration="18169000" />
     </task>
     <task id="LOCAL-00001" summary="bugfix">
       <created>1569724689056</created>
@@ -164,8 +167,8 @@
     <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RubyListComprehension@benchmark.rcov" NAME="benchmark Coverage Results" MODIFIED="1569730198509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
-    <SUITE FILE_PATH="coverage/RubyListComprehension@ruby_list_comprehension_tests.rcov" NAME="ruby_list_comprehension_tests Coverage Results" MODIFIED="1569730161018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
+    <SUITE FILE_PATH="coverage/RubyListComprehension@benchmark.rcov" NAME="benchmark Coverage Results" MODIFIED="1569736407388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
+    <SUITE FILE_PATH="coverage/RubyListComprehension@ruby_list_comprehension_tests.rcov" NAME="ruby_list_comprehension_tests Coverage Results" MODIFIED="1569738102413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
     <SUITE FILE_PATH="coverage/RubyListComprehension@ruby_list_comprehension.rcov" NAME="ruby_list_comprehension Coverage Results" MODIFIED="1569727625961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
     <SUITE FILE_PATH="coverage/RubyListComprehension@list_comprehension.rcov" NAME="ruby_list_comprehension Coverage Results" MODIFIED="1569687839796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
   </component>

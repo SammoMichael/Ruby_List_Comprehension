@@ -2,7 +2,7 @@
 require 'benchmark'
 class ListComprehension
 
-  attr_reader :c, :version, :cache
+  attr_reader :c, :version, :cache, :caching
   def [](*args)
     c[*args]
   end
@@ -12,6 +12,7 @@ class ListComprehension
     @caching = true
     @version = RUBY_VERSION
     @c = ->x {
+      raise 'please use "x" as block parameter name for now' if x[3..5] != ' x '
       # save a pristine copy of call for caching
       y = x[0..-1]
       # check for cached results
@@ -62,11 +63,11 @@ class ListComprehension
         # check Ruby Version stored in @version
         if @version >= '2.7.0'
           return instance_eval(iterable).filter_map do |x|
-            instance_eval(map_condition.join(' ')) if eval(if_condition.join(' '))
+            instance_eval(map_condition.join(' ')) if instance_eval(if_condition.join(' '))
           end
         else
           return instance_eval(iterable).map do |x|
-            instance_eval(map_condition.join(' ')) if eval(if_condition.join(' ')).compact!
+            instance_eval(map_condition.join(' ')) if instance_eval(if_condition.join(' ')).compact!
           end
         end
       end
