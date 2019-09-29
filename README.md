@@ -1,6 +1,5 @@
 # Ruby_List_Comprehension
-https://badge.fury.io/rb/ruby_list_comprehension.svg
-## Part of a proposal to add Ruby list comprehension syntax, your feedback is appreciated!
+![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)
 ## Ruby Tracker Feature request page
 ### https://bugs.ruby-lang.org/issues/16147 
 ## Ruby Gem home
