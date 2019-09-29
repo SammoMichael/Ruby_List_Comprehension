@@ -1,6 +1,6 @@
 # Ruby_List_Comprehension
 ## Part of a proposal to add Ruby list comprehension syntax, your feedback is appreciated!
-### 
+### https://bugs.ruby-lang.org/issues/16147 
 ### gem install ruby_list_comprehension
 # 
 ### in IRB 
