@@ -1,5 +1,5 @@
 # Ruby_List_Comprehension
-![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)
+[![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)]
 ## Ruby Tracker Feature request page
 ### https://bugs.ruby-lang.org/issues/16147 
 ## Ruby Gem home
