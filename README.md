@@ -14,11 +14,11 @@
 #
 #### Now you can pass a string to the list_comp object using bracket notation
 
-### Syntax: l + [] + 'for x in 1..10 do x if x' (map and filter condition optional)
+### Syntax: l + [] + 'for x in 1..10 do x if x end' (map and filter condition optional)
 
 # N.B. as of now please use x as your block parameter and other variables must be $ globals!(prefixed with dollar sign)
-e.g. $nums = [1,2,3]
-l['for x in $nums do x**3 - 2 if $nums.sum < 6 end'] #=> [-1, 6, 25]
+#### e.g. $nums = [1,2,3]
+### l['for x in $nums do x**3 - 2 if $nums.sum < 6 end'] #=> [-1, 6, 25]
 
 #### # these examples are equivalent to the line below
 

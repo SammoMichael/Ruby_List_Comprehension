@@ -6,6 +6,14 @@ require 'set'
 l = ListComprehension.new
 $var = [1, 2, 3]
 
+# p l['for x in {} do end']
+p l['for x in {} do end']
+p l['for x in {1=>1} do end']
+p l['for x in {1=>1} do']
+p l['for x in {1=>true, 2=>false}  ;{x[0] => x[1]} ']
+p l['for x in {1=>true, 2=>false}; {x[0] => x[1]} ']
+p l['for x in {1=>true, 2=>false} ; {x[0] => x[1]} ']
+p l.op
 p l['for x in {1=>1} do x if x end']
 p l['for x in {} do x if x end']
 p l['for x in {1=>1,2=>2,3=>3}; x if x end']
@@ -37,7 +45,7 @@ p arr7 = l['for x in [*1..10] do x end']
 p arr7 = l['for x in (1..10) do x end']
 p arr9 = l['for x in 1..10 ; x if x % 2 == 0 end'] == (1..10).filter{|x|x % 2 == 0}
 p arr9 = l['for x in 1..10; x if x % 2 == 0 end'] == (1..10).filter{|x|x % 2 == 0}
-p arr9 = l[''] == []
+p l[''] == []
 p l['for x in [] do x end']
 p l['for x in {1=>1} do x if x end']
 p l['for x in {} do x if x end']
@@ -72,10 +80,6 @@ p arr9 = l['for x in 1..10 ; x if x % 2 == 0 end'] == (1..10).filter{|x|x % 2 ==
 p arr9 = l['for x in 1..10; x if x % 2 == 0 end'] == (1..10).filter{|x|x % 2 == 0}
 p arr9 = l[''] == []
 p l['for x in [] do x end']
-
-
-
-
 p l['for x in [] do x end'] == for x in [] do x end
 p l.version >= "2.3.0"
 p l.cache

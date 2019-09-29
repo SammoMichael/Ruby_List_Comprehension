@@ -14,8 +14,10 @@ class ListComprehension
     @caching = true
     @version = RUBY_VERSION
     @c = lambda { |x| # check for cached results
-
+      return [] if x == ''
+      x.concat(' end')if x[-3..-1] != 'end'
       return @cache[x] if @caching && @cache[x]
+
       # p "cached: #{@cache[arr].to_s}" if @cache[arr]
 
       y = x[0..-1] # copy of original call
@@ -26,8 +28,10 @@ class ListComprehension
       raise 'please use "x" as block parameter name for now' if x[3..5] != ' x '
 
       arr = x.split
-
-      # check for semicolon instead of do, for now I replace to do
+      if !arr.include?('do')
+        arr.insert(5, 'do')
+      end
+      # replace initial semicolon with do if needed for parser
       if arr[3][-1] == ';' || arr[4][0] == ';' || arr[5][0] == ';' && !arr.include?('do')
         arr = x.to_s.sub(';', ' do ').split
       end
@@ -42,11 +46,25 @@ class ListComprehension
 
       # check for hash to parse csv's
       iterable = arr[3]
-      mdata = y[3...y.rindex('do')].match(/{.+[=>:].+}/)
+      return [{}] if iterable == "{}"
 
-      if !mdata.nil?
+      mdata = y[3...y.rindex('do')].match(/{.+[=>:].+}/)
+      if mdata && mdata[0].include?(';')
+        # p 'hi'
+        iterable = mdata[0].split(';')[0]
+        # p iterable
+        # p arr.insert(5, "do")
+      end
+      if mdata
         if instance_eval(mdata[0]).is_a? Hash
           iterable = mdata[0]
+          p mdata[0]
+          p iterable
+          p arr
+
+          if iterable[-1] == ';'
+            iterable = iterable[0..-1]
+          end
         end
       end
 
@@ -83,7 +101,6 @@ class ListComprehension
           end
         else
           @op = 'map&compact'
-          # p 'map&compact'
           return instance_eval(iterable).map do |x|
             instance_eval(map_condition.join(' ')) if instance_eval(if_condition.join(' '))
           end.compact!
@@ -93,8 +110,9 @@ class ListComprehension
       unless list_comp.is_a?(Array) || list_comp.is_a?(Hash)
         list_comp = [list_comp]
       end
+
+      list_comp = list_comp == [nil] ? [] : list_comp
       @cache[arr] = list_comp if @caching
-      list_comp == [nil] ? [] : list_comp
     }
   end
 end
