@@ -1,19 +1,18 @@
 
 require './ruby_list_comprehension.rb'
 require 'prime'
+require 'set'
 
 l = ListComprehension.new
+
+
+p l['for x in 1..10 ;x+2 end'] == (1..10).map{@1+2}
 p l['for x in 1..10 do x**2 if x > 5 end'] == (1..10).filter_map{@1 ** 2 if @1 > 5}
 p arr = l['for x in 1..10 do x end'] == [for x in 1..10 do x end]
 p arr2 = l['for x in 1..10 do x ** 2 if x % 2 == 0 end'] == (1..10).filter_map{@1**2 if @1 % 2 == 0}
 p arr3 = l['for x in [1,2,3,4,5] do x if x % 2 == 0 end'] == [1,2,3,4,5].filter{@1 % 2 == 0}
-p arr4 = l['for x in 1..10 do x if x % 2 == 0 end']
-p arr5 = l['for x in 1..10 do x if x % 2 == 0 end']
-p arr6 = l['for x in 1..10 do x if x % 2 == 0 end']
-p arr7 = l['for x in 1..10 do x if x % 2 == 0 end']
 p arr9 = l['for x in 1..10; x if x % 2 == 0 end'] == (1..10).filter{@1 % 2 == 0}
 p arr9 = l['for x in 1..10 ; x if x % 2 == 0 end'] == (1..10).filter{@1 % 2 == 0}
-require 'set'
 # l = ListComprehension.new
 # p l['for x in 1..[1,2,3].reduce{@1+@2} do x if x end']
 # # p l["for x in {1=>1, 2=>2} do x if x end"]
@@ -40,4 +39,4 @@ require 'set'
 # p a.each(&1.:p)
 # p for x in Set.new([1,2,3]) do x**2 if x > 2 end
 p l.version >= "2.3.0"
-
+p l.cache
