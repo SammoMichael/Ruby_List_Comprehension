@@ -40,10 +40,13 @@ class ListComprehension
       if arr[3..-1].any?{|x|x.include?(';')} && !arr.include?('do')
         arr = list.to_s.sub(';', ' do ').split
       end
+      arr.insert(-2, 'do') if arr.none?{|x|x.include?('do')} && arr.none?{|x|x.include?('do')}
+      # p arr
 
       # pre-eval to check for invalid syntax
       begin
-        res = instance_eval(list)
+        # p arr.join(' ')
+        res = instance_eval(arr.join(' '))
         return [] if res.nil?
       rescue SyntaxError => se
         raise 'incorrect syntax for list comprehension' + "\n" + se.to_s
@@ -54,8 +57,11 @@ class ListComprehension
       return [{}] if iterable == '{}'
       m_data = copy1[3...copy1.rindex('do')].match(/({.+[=>:].+})/)
       if m_data
-        if instance_eval(m_data[0].split(';')[0]).is_a? Hash
-          iterable = m_data[0].split(';')[0]
+        first_hash = m_data[0].split(';')[0]
+        if arr.index(first_hash) == 3
+          if instance_eval(m_data[0].split(';')[0]).is_a? Hash
+            iterable = m_data[0].split(';')[0]
+          end
         end
       end
       @iterable = instance_eval(iterable)
@@ -63,20 +69,22 @@ class ListComprehension
       map_condition = arr[arr.index('do') + 1...(arr.index('if') || arr.index('end'))]
       @filterable = if_condition.join(' ')
       @mappable = map_condition.join(' ')
-
+      # p @mappable
       ### list_comprehension identity currently uses for(each) as if normal ruby
-      return *@iterable if @mappable == @var && (@filterable == 'true' || @var)
+      # p @filterable
+      # p @mappable
+      return *@iterable if (@mappable == @var || @mappable == '') && (@filterable == 'true' || @filterable == @var)
 
       # define a method to handle the transformation to list_comp
       self.class.send(:define_method, 'lc') do |arr|
 
-        if map_condition == @var
+        if @mappable == @var
           @op[@count] = 'filter'
           @count += 1
           return @iterable.filter { |x| instance_eval(@filterable.gsub(@var, x.to_s))}
         end
 
-        if if_condition == ['true'] || @var
+        if @filterable == 'true' || @filterable == @var
           @op[@count] = 'map'
           @count += 1
           return @iterable.map { |x| instance_eval(@mappable.gsub(@var, x.to_s))}
@@ -99,6 +107,7 @@ class ListComprehension
         list_comp = [list_comp]
       end
       list_comp = list_comp == [nil] ? [] : list_comp
+      # p @op
       @cache[list] = list_comp if @caching
     }
   end
