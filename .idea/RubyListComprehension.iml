@@ -5,8 +5,8 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="rbenv: 2.6.3" jdkType="RUBY_SDK" />
+    <orderEntry type="jdk" jdkName="rbenv: 2.7.0-preview1" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="ruby_list_comprehension (v0.0.9, rbenv: 2.6.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby_list_comprehension (v0.1.0, rbenv: 2.7.0-preview1) [gem]" level="application" />
   </component>
 </module>

@@ -6,7 +6,8 @@ n = 5000000
 p l
 
 Benchmark.bm do |x|
-  x.report { l['for x in 1..10 do x+2 end'] }
+  x.report { l[''] }
+  x.report { l['for x in 1..10 do x'] }
   x.report { l['for x in 1..10 ;x+2 end'] }
   x.report { l['for x in 1..10 do x+2 end'] }
   x.report { (1..10).map{@1+2} }
@@ -25,7 +26,7 @@ Benchmark.bm do |x|
   x.report { l['for x in 1..10 do x ** 2 if x % 2 == 0 end']}
   x.report { l['for x in 1..10 do x ** 2 if x % 2 == 0 end']}
   x.report {(1..10).filter_map{@1**2 if @1 % 2 == 0}}
-  x.report { l['for x in [1,2,3,4,5] do x if x % 2 == 0 end']}
+  x.report { l['for x in [1,2,3,4,5] do x+2 if x % 2 == 0 end']}
   x.report {[1,2,3,4,5].filter{@1 % 2 == 0}}
   x.report { (1..10).filter{@1 % 2 == 0}}
   # x.report {}
@@ -50,3 +51,4 @@ end
 # # p l['for x in 1..10do;x+2;end']
 # # p for x in 1..10do;x+2;end
 p l.cache
+p l.op
