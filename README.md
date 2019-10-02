@@ -1,5 +1,6 @@
 # Ruby_List_Comprehension
-## An idiosyncratic Ruby approach to list comprehensions => `l[for x in 1..10 do math.sqrt(x) if (x**2).even? end]`
+## An idiosyncratic Ruby approach to list comprehensions => 
+## `l[for x in 1..10 do math.sqrt(x) if (x**2).even? end]`
 [![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)](https://badge.fury.io/rb/ruby_list_comprehension)
 ### Ruby Tracker Feature request page https://bugs.ruby-lang.org/issues/16147 
 ### Ruby Gem home  https://rubygems.org/gems/ruby_list_comprehension
