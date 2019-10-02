@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e12fec72-8147-4e30-b53e-c497388b4e62" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.rubocop.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.1.4.gem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.1.5.gem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension.rdoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RubyListComprehension.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RubyListComprehension.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/anotherPractice.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/anotherPractice.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/benchmark.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/benchmark.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ruby_list_comprehension_tests.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ruby_list_comprehension_tests.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ruby_list_comprehension-0.1.2.gem" beforeDir="false" afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.1.2.gem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ruby_list_comprehension.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby_list_comprehension.gemspec" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +157,7 @@
       <workItem from="1569873359178" duration="27000" />
       <workItem from="1569916591714" duration="41177000" />
       <workItem from="1569997311748" duration="2686000" />
-      <workItem from="1570000572927" duration="3147000" />
+      <workItem from="1570000572927" duration="3383000" />
     </task>
     <task id="LOCAL-00001" summary="bugfix">
       <created>1569724689056</created>

@@ -20,7 +20,6 @@
 ### l[for x in $nums do x ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]
 ### l[for num in $nums do num ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]
 
-
 ## 1. List Comprehension Identity (Splat a range or call .entries on a hash)
 
 ### l[for x in 1..10 do end] #=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -29,13 +28,6 @@
 ### l[for x in [1,2] do end] #=> [1, 2]
 ### l[for x in [1,2] do end] #=> [1, 2]
 ### l[for x in Set.new([1,2]) do end] #=> [1, 2]
-=======
-### l['for x in 1..10'] #=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-### l['for x in {1=>1}'] #=> [1, 1]
-### l['for x in [1,2]'] #=> [1, 2]
-### l['for x in [1,2]'] #=> [1, 2]
-### l['for x in Set.new([1,2])'] #=> [1, 2]
-
 
 ## 2. List Comprehension (Map)
 ### l[for x in 1..10 do x + 1 end] #=> [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -45,19 +37,9 @@
 #### l[for x in 1..10 do x if x > 5 end] 
 #### l[for x in 1..10 do x 2 if x % 2 == 0 end] 
 
-
-
 ## 4. List Comprehension (FilterMap/Map&Compact for Ruby <= 2.7)
 #### l[for x in 1..10 do x**2 if x > 5 end] 
 #### l[for x in 1..10 do x ** 2 if x % 2 == 0 end] 
-
-## 4. List Comprehension (FilterMap/Map&Compact for Ruby < 2.7)
-#### l['for x in 1..10 do x**2 if x > 5 end'] 
-#### l['for x in 1..10 do x ** 2 if x % 2 == 0 end'] 
-
-
-
-
 
 #### # these examples are equivalent to the line below
 #### l[for x in 1..10 do x**2 if x > 5 end] 
