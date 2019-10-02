@@ -18,7 +18,7 @@
 
 ### N.B. main block parameter(the for 'x' part) can be anything but other variables (e.g. your iterable) must be $ globals!(prefixed with dollar sign)         
 ### e.g. `$nums = [1,2,3]`
-## `l[for x in $nums do x ** 3 if $nums.sum < 6 end] #=> [-1, 6, 25]`
+### `l[for x in $nums do x ** 3 if $nums.sum < 6 end] #=> [-1, 6, 25]`
 
 ## 1. List Comprehension Identity (Splat a range or call .entries on a hash)
 
