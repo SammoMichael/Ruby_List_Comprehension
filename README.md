@@ -24,8 +24,7 @@
 
 ## 1. List Comprehension Identity (Splat a range or call .entries on a hash)
 ### l['for x in 1..10'] #=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-### l['for x in 1..10'] #=> [[1, 1]]
-### l['for x in {1=>1}'] #=> [1, 2]
+### l['for x in {1=>1}'] #=> [1, 1]
 ### l['for x in [1,2]'] #=> [1, 2]
 ### l['for x in [1,2]'] #=> [1, 2]
 ### l['for x in Set.new([1,2])'] #=> [1, 2]
