@@ -2,7 +2,7 @@ require './ruby_list_comprehension.rb'
 require 'prime'
 require 'set'
 l = ListComprehension.new
-$var = [1, 2, 3]
+# $var = [1, 2, 3]
 
 
 # p l['for x in 1..10']
@@ -32,13 +32,14 @@ end
 # p l['for num in (1..10) do num if other_method ']
 # p $h.map{|e| {e*3 => e.length*2}}
 # p l['for x in {1=>1, 2=>2, 3 => 3}  ']
-$h = {1=>1}
+# $h = {1=>1}
 # p l['for x in Set.new([1,2,3])']
 #
-# p l['for x in 1..10 do x']
+# for x in 1..10 do x + 1 if x.even? end
 # p l['for x in {1=>1}']
 # p l['for x in Set.new([1,2,3])']
 require 'set'
+require 'readline'
 # p l['for x in 1..10']
 # p l['for x in {1=>1}']
 # x = {1=>1}
@@ -47,13 +48,75 @@ require 'set'
 # p l['for x in [1,2]']
 # p l['for x in Set.new([1,2])']
 
-p l['for x in 1..10 do x + 1']
-p l['for my_var in 1..10 do my_var * my_var']
+# p l['for x in 1..10 do x + 1']
+# p l['for my_var in 1..10 do my_var * my_var']
+# arr = readlines($0)
+# p arr
+l = ListComprehension.new
+# file = File.open($0)
+# file_data = file.readlines.map(&:chomp)
+# p l[file_data[37]]
+# p file_data.index('for x in 1..10 do x + 1 if x.even? end')
+# l[for x in 1..10 do x if x != 1 end]
+# l[for x in 1..10 do x if x != 1 end]
+# class Kernel
+#   def [](args)
+#     p 'hi'
+#     l[args]
+#   end
+#
+# end
+# def [](args)
+#   l = ListComprehension.new
+#   p 'hi'
+#   l[args]
+# end
 
+def *(args)
+  l[args]
+  end
+# def `(args)
+#   l = ListComprehension.new
+#   l[args]
+# end
+# class Main
+#   def *(args)
+#     l[args]
+#   end
+#   def []args
+#     p 'hi'
+#   end
+# end
+# class BasicObject
+#   def *(args)
+#     # p 'hi'
+#     l[args]
+#   end
+# end
+#
+# class Array
+#   def initialize
+#     p 'hi'
+#   end
+#   def []args
+#     super
+#     l = ListComprehension.new
+#     p l
+#       # l.(args)
+#   end
+# end
+# class Main
+#   def self(args)
+#     l[args]
+#     end
+#   def self.l
+#     l[args]
+#   end
+# end
+# p *[for x in 1..10 do x if x.even? end]
+p l[for x in 1..10 do x if x.even? end]
+p l[for x in 1..10 do x if x.even? end]
 
-
-
-# p l['for x in 1..10 do x if x != 1']
 # # p l.op
 # # p l['for x in {} do end']
 # # p l['for x in {} do end']
@@ -186,3 +249,6 @@ p l['for my_var in 1..10 do my_var * my_var']
 # # # p list_comp l, 'for x in 1..10 do 10 end'
 # p l.cache
 # # # p l.cache_count
+
+
+
