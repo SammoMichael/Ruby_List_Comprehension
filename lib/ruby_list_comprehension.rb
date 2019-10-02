@@ -58,13 +58,14 @@ class ListComprehension
       m_data = copy1[3...copy1.rindex('do')].match(/({.+[=>:].+})/)
       if m_data
         first_hash = m_data[0].split(';')[0]
-        if arr.index(first_hash) == 3
-          if instance_eval(m_data[0].split(';')[0]).is_a? Hash
-            iterable = m_data[0].split(';')[0]
+        if @list.index(first_hash) == 9
+          if instance_eval(first_hash).is_a? Hash
+            iterable = first_hash
           end
         end
       end
       @iterable = instance_eval(iterable)
+      # p @iterable
       if_condition = arr.include?('if') ? arr[arr.index('if') + 1...-1] : ['true']
       map_condition = arr[arr.index('do') + 1...(arr.index('if') || arr.index('end'))]
       @filterable = if_condition.join(' ')

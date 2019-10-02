@@ -21,25 +21,34 @@ $var = [1, 2, 3]
 # p l['for x in {1=>1}  ;{x*3=>x.length*2} if x.sum']
 # p l['for x in {1=>1}  ;{x*3=>x.length*2} if x.sum']
 require 'set'
-p l['for x in Set.new([[1,2,3],[4,5,6]]); {x=>x} if x.sum']
-p l['for x in Set.new([[1,2,3],[1,2,3],[4,5,6]]); {x=>x} if x.sum']
-p l['for x in Set.new([[1,2,3],[1,2,3],[4,5,6]]); {x=>x}']
-p l['for x in Set.new([[1,2,3],[4,5,6]]); {x=>x} if x.sum']
+# p l['for x in Set.new([[1,2,3],[4,5,6]]); {x=>x} if x.sum']
+# p l['for x in Set.new([[1,2,3],[1,2,3],[4,5,6]]); {x=>x} if x.sum']
+# p l['for x in Set.new([[1,2,3],[1,2,3],[4,5,6]]); {x=>x}']
+# p l['for x in Set.new([[1,2,3],[4,5,6]]); {x=>x} if x.sum']
 def other_method
   true
 end
 
-p l['for num in (1..10) do num if other_method ']
+# p l['for num in (1..10) do num if other_method ']
 # p $h.map{|e| {e*3 => e.length*2}}
-
+# p l['for x in {1=>1, 2=>2, 3 => 3}  ']
 $h = {1=>1}
 # p l['for x in Set.new([1,2,3])']
 #
 # p l['for x in 1..10 do x']
 # p l['for x in {1=>1}']
 # p l['for x in Set.new([1,2,3])']
+require 'set'
+# p l['for x in 1..10']
+# p l['for x in {1=>1}']
+# x = {1=>1}
+# p x.entries
+# p l['for x in [1,2]']
+# p l['for x in [1,2]']
+# p l['for x in Set.new([1,2])']
 
-
+p l['for x in 1..10 do x + 1']
+p l['for my_var in 1..10 do my_var * my_var']
 
 
 
