@@ -1,5 +1,5 @@
 # Ruby_List_Comprehension
-## An idiosyncratic Ruby approach to list comprehensions
+# An idiosyncratic Ruby approach to list comprehensions => `l[for x in 1..10 do math.sqrt(x) if (x**2).even? end]`
 [![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)](https://badge.fury.io/rb/ruby_list_comprehension)
 ### Ruby Tracker Feature request page https://bugs.ruby-lang.org/issues/16147 
 ### Ruby Gem home  https://rubygems.org/gems/ruby_list_comprehension
@@ -59,12 +59,12 @@
 #### `l[for x in 1..10 ; x if x % 2 == 0 end]`  #(use `do` keyword if possible but there is support for semicolons)
 `(1..10).filter{@1 % 2 == 0}`
 
-#### `l[for x in [1,[1,2,3].reduce{|x,y|x+y}] do x if x end]`
-`for x in [1,[1,2,3].reduce{|x,y|x+y}] do x if x end`  #(test if parser can distinguish hash `{1=>1}` from block `{|x|x})`
+#### `l[for x in [1,2,3].reduce{|x,y|x+y}] do x if x end]`
+`for x in [1,2,3].reduce{|x,y|x+y}] do x if x end`  #(test if parser can distinguish hash `{1=>1}` from block `{|x|x})`
 
 ### Expanding support for hash comprehensions try it out let me know of any bugfixes needed
-#### `l[for x in {1=>1, 2=>2, 3=>3} do {x[0]**2 => x} if x end]`
+## `l[for x in {1=>1, 2=>2, 3=>3} do {x[0]**2 => x} if x end] #=> [{1=>[1,1]}, {4=>[2,2]}, {9=>[3,3]}]`
 
 
-### caching is defaulted to true you can change that with `l.caching = false` or print out the cache with `p l.cache`
-### there are also instance variables for a list of operators `l.op` and some other utilities in the ListComprehension object
+## caching is defaulted to true you can change that with `l.caching = false` or print out the cache with `p l.cache`
+## there are also instance variables for a list of operators `l.op` and some other utilities in the ListComprehension object
