@@ -1,31 +1,28 @@
 # Ruby_List_Comprehension
 ## An idiosyncratic Ruby approach to list comprehensions
 [![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)](https://badge.fury.io/rb/ruby_list_comprehension)
-#### Ruby Tracker Feature request page https://bugs.ruby-lang.org/issues/16147 
-#### Ruby Gem home  https://rubygems.org/gems/ruby_list_comprehension
-#### Summary: List comprehensions are a flexible prototyping tool having iterations in multiple languages. While Ruby is already equipped with powerful enumerable methods, list comprehensions have some unique benefits: [] brackets make array return more intuitive, ruby_list_comprehension automatically determines whether to map, filter, or filter_map(>=2.7.0) which means less syntax to memorize, and beginners or experienced programmers from languages such as Python or Julia, where list comprehensions feature prominently, may find it easier to adapt to Ruby. 
+### Ruby Tracker Feature request page https://bugs.ruby-lang.org/issues/16147 
+### Ruby Gem home  https://rubygems.org/gems/ruby_list_comprehension
+### Summary: List comprehensions are a flexible prototyping tool having iterations in multiple languages. While Ruby is already equipped with powerful enumerable methods, list comprehensions have some unique benefits: [] brackets make array return more intuitive, ruby_list_comprehension automatically determines whether to map, filter, or filter_map(>=2.7.0) which means less syntax to memorize, and beginners or experienced programmers from languages such as Python or Julia, where list comprehensions feature prominently, may find it easier to adapt to Ruby. 
 ## Instructions:
-#### ~> gem install ruby_list_comprehension
+### ~> gem install ruby_list_comprehension
 
-#### # require in IRB or Ruby file
-#### require 'ruby_list_comprehension'
-#### # instantiate a list comprehension object
-#### l = ListComprehension.new
+### # require in IRB or Ruby file
+### require 'ruby_list_comprehension'
+### # instantiate a list comprehension object
+### l = ListComprehension.new
 #
 
 ### Syntax: `l[for x in 1..10 do x if x end]` (map and filter condition optional)
 
-#### N.B. main block parameter(the for 'x' part) can be anything but other variables (e.g. your iterable) must be $ globals!(prefixed with dollar sign)         
-#### e.g. `$nums = [1,2,3]`
-### `l[for x in $nums do x ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]`
-### `l[for num in $nums do num ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]`
+### N.B. main block parameter(the for 'x' part) can be anything but other variables (e.g. your iterable) must be $ globals!(prefixed with dollar sign)         
+### e.g. `$nums = [1,2,3]`
+## `l[for x in $nums do x ** 3 if $nums.sum < 6 end] #=> [-1, 6, 25]`
 
 ## 1. List Comprehension Identity (Splat a range or call .entries on a hash)
 
 ### `l[for x in 1..10 do end] #=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`
-### `l[for x in 1..10 do end] #=> [[1, 1]]`
-### `l[for x in {1=>1} do end] #=> [1, 2]`
-### `l[for x in [1,2] do end] #=> [1, 2]`
+### `l[for x in {1=>1} do end] #=> [[1, 1]]`
 ### `l[for x in [1,2] do end] #=> [1, 2]`
 ### `l[for x in Set.new([1,2]) do end] #=> [1, 2]`
 
@@ -37,7 +34,7 @@
 #### `l[for x in 1..10 do x if x > 5 end]` 
 #### `l[for x in 1..10 do x 2 if x % 2 == 0 end]` 
 
-## 4. List Comprehension (FilterMap/Map&Compact for Ruby <= 2.7)
+## 4. List Comprehension (FilterMap/Map&Compact for `Ruby <= 2.7`)
 #### `l[for x in 1..10 do x**2 if x > 5 end]` 
 #### `l[for x in 1..10 do x ** 2 if x % 2 == 0 end]` 
 
