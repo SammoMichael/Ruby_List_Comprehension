@@ -113,7 +113,7 @@ def *(args)
 #     l[args]
 #   end
 # end
-# p *[for x in 1..10 do x if x.even? end]
+p l[for x in 1..10 do x if x.even? end]
 p l[for x in 1..10 do x if x.even? end]
 p l[for x in 1..10 do x if x.even? end]
 

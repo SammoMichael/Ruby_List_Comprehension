@@ -8,7 +8,7 @@ class ListComprehension
 
   def [](list_comp)
     if @filename == 'pry' || @filename == 'irb'
-      @line = Readline::HISTORY.to_a.uniq[-1].strip
+      @line = Readline::HISTORY.to_a.reverse.uniq.reverse[-1]
       start = @line.index('l[') + 2
       ending = @line[start..-1].index('end') + 5
       @line = @line[start...ending]
@@ -22,7 +22,7 @@ class ListComprehension
       ending = @line[start..-1].index('end')
       @line = @line[start+2...ending + 6].chop
     end
-    # p @line
+    @line
     c[@line]
   end
 
@@ -97,13 +97,14 @@ class ListComprehension
         if @mappable == @var
           @op[@count] = 'filter'
           @count += 1
-          return @iterable.filter { |x| instance_eval(@filterable.gsub(@var, x.to_s)) }
+          return @iterable.filter { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@filterable.gsub(@var, x.to_s)) }
         end
 
         if @filterable == 'true' || @filterable == @var
           @op[@count] = 'map'
           @count += 1
-          return @iterable.map { |x| instance_eval(@mappable.gsub(@var, x.to_s)) }
+
+          return @iterable.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@var, x.to_s)) }
         end
 
         filter_map_condition_args = "#@mappable if #@filterable"
@@ -111,11 +112,11 @@ class ListComprehension
         if @version >= '2.7.0'
           @op[@count] = 'filter_map'
           @count += 1
-          return @iterable.filter_map { |x| instance_eval(filter_map_condition_args.gsub(@var, x.to_s)) }
+          return @iterable.filter_map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub(@var, x.to_s)) }
         else
           @op[@count] ="map&compact"
           @count += 1
-          @iterable.map { |x| instance_eval(filter_map_condition_args.gsub!(@var, x.to_s)) }.compact!
+          @iterable.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub!(@var, x.to_s)) }.compact!
         end
       end
       list_comp = lc(arr)
