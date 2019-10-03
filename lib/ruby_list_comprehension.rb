@@ -3,10 +3,11 @@
 require 'readline'
 
 class ListComprehension
-  attr_accessor :cache, :caching, :mappable, :filterable, :iterable, :var, :list, :location, :line
+  attr_accessor :cache, :caching, :mappable, :filterable, :iterable, :var, :list, :location, :line, :count, :nested, :nested_var, :file, :list_comp
   attr_reader :c, :version, :op, :cache_count, :filename
 
   def [](list_comp)
+    @list_comp = list_comp
     if @filename == 'pry' || @filename == 'irb'
       @line = Readline::HISTORY.to_a.reverse.uniq.reverse[-1]
       start = @line.index('l[') + 2
@@ -14,19 +15,27 @@ class ListComprehension
       @line = @line[start...ending]
     else
       @location = caller_locations.last.to_s.scan(/\d+/).last.to_i
-      file = File.open($PROGRAM_NAME)
-      file_data = file.readlines.map(&:chomp)
-      file.close
+      @file = File.open($PROGRAM_NAME)
+      file_data = @file.readlines.map(&:chomp)
+      @file.close
       @line = file_data[@location - 1].strip
       start = @line.index('l[')
       ending = @line[start..-1].index('end')
+      full_line = @line
       @line = @line[start+2...ending + 6].chop
+      list2 = full_line.split('l[')
+      list2.each_with_index do |list, idx|
+        if list.split[3] == list_comp.to_s
+          @line = list[0..list.index('end]')+2]
+        end
+      end
     end
     @line
     c[@line]
   end
 
   def initialize
+
     @filename = $PROGRAM_NAME
     @cache = {}
     @count = 0
@@ -34,7 +43,7 @@ class ListComprehension
     @cache_count = 0
     @caching = true
     @version = RUBY_VERSION
-    @c = lambda { |list| # check for cached results
+    @c = lambda { |list|
       return [] unless list.is_a? String
 
       @list = list.strip
@@ -54,25 +63,36 @@ class ListComprehension
       copy1 = list[0..-1]
       arr = list.split
       @var = arr[1]
-
-      # replace initial semicolon with do if needed for parser
-      if arr[3..-1].any? { |x| x.include?(';') } && !arr.include?('do')
-        arr = list.to_s.sub(';', ' do ').split
+      arr = list.split
+      if !arr.include?('do') && !(list.scan('for').length >= 2)
+        list.sub!(';','do')
+        arr = list.split
+      elsif !arr.include?('do')
+        2.times{list.sub!(';','do')}
+        arr = list.split
       end
-      arr.insert(-2, 'do') if arr.none? { |x| x.include?('do') } && arr.none? { |x| x.include?('do') }
+      arr = list.split
 
       # pre-eval to check for invalid syntax
       begin
-        res = instance_eval(arr.join(' '))
+        if list.scan('for').length >= 2
+          @nested = true
+          return [[]] if arr[3] == '[[]]'
+          return {} if arr == '{}'
+          @iterable = @list_comp
+          return @iterable if @iterable.to_a.length == 1 && @iterable[0].length == 1
+          arr += [' end']
+        end
+          arr_copy = arr[0..-1]
+          arr_copy2 = arr[0..-1]
+        res = instance_eval(arr_copy.join(' '))
         return [] if res.nil?
       rescue SyntaxError => se
         raise 'incorrect syntax for list comprehension' + "\n" + se.to_s
       end
 
       # check for hash to parse csv's
-      iterable = arr[3]
       return [{}] if iterable == '{}'
-      
       m_data = copy1[3...copy1.rindex('do')].match(/({.+[=>:].+})/)
       if m_data
         first_hash = m_data[0].split(';')[0]
@@ -80,43 +100,81 @@ class ListComprehension
           iterable = first_hash if instance_eval(first_hash).is_a? Hash
         end
       end
-      @iterable = instance_eval(iterable)
-      # p @iterable
+      arr = arr_copy2
+      @iterable = list
       if_condition = arr.include?('if') ? arr[arr.index('if') + 1...-1] : ['true']
       map_condition = arr[arr.index('do') + 1...(arr.index('if') || arr.index('end'))]
       @filterable = if_condition.join(' ')
       @mappable = map_condition.join(' ')
-      ### list_comprehension identity currently uses for(each) as if normal ruby
-      # p @filterable
-      # p @mappable
-      return *@iterable if (@mappable == @var || @mappable == '') && (@filterable == 'true' || @filterable == @var)
+      if @nested
+        @mappable
+        @nested_var = arr[arr.rindex('for')+1]
+        if @mappable.match?('do')
+          @mappable = @mappable[@mappable.index('do')+3..-1]
+        else
+          @mappable = @mappable[@mappable.index(';')+3..-1]
+        end
+          @filterable = @filterable[0..-5]
+        return *@iterable if (@mappable == @nested_var || @mappable == '') && (@filterable == 'true' || @filterable == @nested_var)
+
+      end
+      p @iterable
+      return @iterable if (@mappable == @var || @mappable == '') && (@filterable == 'true' || @filterable == @var)
 
       # define a method to handle the transformation to list_comp
       self.class.send(:define_method, 'lc') do |arr|
-
-        if @mappable == @var
+      # if @nested
+      #   @nested_var = arr[arr.rindex('for')+1]
+      #   @mappable = @mappable[@mappable.index('do')+3..-1]
+      #   @filterable = @filterable[0..-5]
+      # end
+        if @mappable == @var || @mappable == @nested_var
           @op[@count] = 'filter'
-          @count += 1
-          return @iterable.filter { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@filterable.gsub(@var, x.to_s)) }
+          # p 'filter'
+          if @nested
+            @op[@count] = ['flat_map', 'filter']
+            return @list_comp.flat_map{|array| array.filter {|x|x = "'#{x}'" if x.is_a? String; instance_eval(@filterable.gsub(@var, x.to_s))  }}
+          end
+          return @list_comp.filter { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@filterable.gsub(@var, x.to_s)) }
         end
-
-        if @filterable == 'true' || @filterable == @var
+        if @filterable == 'true' || @filterable == @var || @filterable == @nested_var || @filterable == ''
+          # p 'map'
           @op[@count] = 'map'
-          @count += 1
-
-          return @iterable.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@var, x.to_s)) }
+          if @nested
+            @op[@count] = ['flat_map', 'map']
+              return @list_comp.flat_map{|array| array.map{ |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@nested_var, x.to_s)) }}
+          else
+            return @list_comp.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@var, x.to_s)) }
+          end
         end
 
         filter_map_condition_args = "#@mappable if #@filterable"
         # check Ruby Version stored in @version
         if @version >= '2.7.0'
           @op[@count] = 'filter_map'
-          @count += 1
-          return @iterable.filter_map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub(@var, x.to_s)) }
+          if @nested
+            @op[@count] = ['flat_map', 'filter_map']
+            filter_map_condition_args = "#@mappable if #@filterable"
+            @nested_var = arr[arr.rindex('for')+1]
+            return @list_comp.flat_map{ |array| array.filter_map {|x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub(@nested_var, x.to_s))}}
+          else
+            return @list_comp.filter_map { |x| x = "'#{x}'" if x.is_a? String; filter_map_condition_args.gsub(@var, x.to_s); instance_eval(filter_map_condition_args.gsub(@var, x.to_s)) }
+          end
         else
           @op[@count] ="map&compact"
-          @count += 1
-          @iterable.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub!(@var, x.to_s)) }.compact!
+          if @nested
+            @op[@count] = ['flat_map', 'map&compact']
+            if @mappable.match?('do')
+              @mappable = @mappable[@mappable.index('do')+3..-1]
+            else
+              @mappable = @mappable[@mappable.index(';')+3..-1]
+            end
+            filter_map_condition_args = "#@mappable if #@filterable"[0..-5]
+            @nested_var = arr[arr.rindex('for')+1]
+            return @list_comp.flat_map{ |array| array.map {|x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub(@nested_var, x.to_s))}}.compact!
+          else
+            @list_comp.flat_map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(filter_map_condition_args.gsub!(@var, x.to_s)) }
+          end
         end
       end
       list_comp = lc(arr)
@@ -124,7 +182,10 @@ class ListComprehension
         list_comp = [list_comp]
       end
       list_comp = list_comp == [nil] ? [] : list_comp
-      # p @op
+      if list_comp.is_a? Numeric
+        return [list_comp]
+      end
+      @count += 1
       @cache[list] = list_comp if @caching
     }
   end
