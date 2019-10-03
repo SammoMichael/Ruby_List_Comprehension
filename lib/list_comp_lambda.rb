@@ -2,7 +2,7 @@
   p bloc
   p 'hi'
   return [] unless list.is_a? String
-
+  p 'change'
   @list = list.strip
   arr = @list.strip
   case list
