@@ -112,44 +112,53 @@ def *(args)
 #     l[args]
 #   end
 # end
-p l[for x in 1..10 do x if x.even? end].sum + l[for x in 5..50 do x if x.even? end].sum + l[for x in 1..30 do x if x.even? end].sum
+# p l[for x in 1..10 do x if x.even? end].sum + l[for x in 5..50 do x if x.even? end].sum + l[for x in 1..30 do x if x.even? end].sum
 #
-p l[for x in 1..10 do x * 1 end] + l[for x in 1..10 do x - 1 end]  << l[for x in 1..10 do x - 10 end].sum
+# p l[for x in 1..10 do x * 1 end] + l[for x in 1..10 do x - 1 end]  << l[for x in 1..10 do x - 10 end].sum
+# #
+# $a = [[1,2,3],[4,5,6]]
+# #
+# p l[for arr in $a do for i in arr do i end; end]
+# # @cache2 = []
+# p l[for arr in [[1,2,3],[4,5,6]] do for i in arr do $* << i end; end]
+# # p $*
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x*2 end end]
+# p l[for arr in [[1,2,3],[4,5,6],[7,8,9]] do for x in arr do x**2 end end]
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x*2 if x.even? end end]
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr ; x+2 if x end end]
+# p l[for arr in [[1,2,3],[4,5,6]] ; for x in arr ; x if x % 2 == 0 end end]
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x % 2 == 0 end end]
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x end end]
+# p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x end end]
+# p l[for arr in [[{1=>1},{2=>2}]] do for x in arr do x if x end end]
+# # # print *$a
+# #
+# # p l.op
+# # # p [[1,2,3],[4,5,6]].flat_map{@2*2}
+# # # p @cache2
+# #
+# #
+# #
 #
-$a = [[1,2,3],[4,5,6]]
 #
-p l[for arr in $a do for i in arr do i end; end]
-# @cache2 = []
-p l[for arr in [[1,2,3],[4,5,6]] do for i in arr do $* << i end; end]
-# p $*
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x*2 end end]
-p l[for arr in [[1,2,3],[4,5,6],[7,8,9]] do for x in arr do x**2 end end]
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x*2 if x.even? end end]
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr ; x+2 if x end end]
-p l[for arr in [[1,2,3],[4,5,6]] ; for x in arr ; x if x % 2 == 0 end end]
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x % 2 == 0 end end]
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x end end]
-p l[for arr in [[1,2,3],[4,5,6]] do for x in arr do x if x end end]
-p l[for arr in [[{1=>1},{2=>2}]] do for x in arr do x if x end end]
-# # print *$a
-#
-# p l.op
-# # p [[1,2,3],[4,5,6]].flat_map{@2*2}
-# # p @cache2
-#
-#
-#
-#
-#
-#
+# l[for arr in $a do for i in arr do end end]
+
 #
 # # p (2..20).filter(&:even?).sum * (1..10).sum
 # # p l[for x in [1,2]; x + 2 end].sum
 # # p [1,2].map{@1+2}.sum
-p l[for x in 1..10 do x if x.even? end].sum + l[for x in 5..50 do x if x.even? end].sum
-p l[for x in 1..10 do x if x.even? end]
-p l[for x in 1..10 do x if x.even? end]
-p for x in 1..10 do x if x.even? end
+# p l[for x in 1..10 do x if x.even? end].sum + l[for x in 5..50 do x if x.even? end].sum
+# p l[for x in 1..10 do x if x.even? end]
+# p l[for x in 1..10 do x if x.even? end]
+p [for j in 1..5 do for i in 1..5 do end end]
+# p l[[for j in 1..5 do end], for i in 1..5 do end]
+p l.op
+p (1..5).map{ [*1..5]}
+for j in 1..5 do $* << [*1..5] end
+p $*
+p l.nested
+
+# p for x in 1..10 do x if x.even? end
 # p l.op
 # # # p l['for x in {} do end']
 # # # p l['for x in {} do end']

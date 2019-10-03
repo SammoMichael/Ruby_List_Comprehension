@@ -15,10 +15,12 @@
 
 ### Syntax: l[for x in 1..10 do x if x end] (map and filter condition optional)
 
-#### N.B. main block parameter(the for 'x' part) can be anything but other variables (e.g. your iterable) must be $ globals!(prefixed with dollar sign)         
-#### e.g. $nums = [1,2,3]
-### l[for x in $nums do x ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]
+#### N.B. main block parameter(the for 'x' part) can be anything.
+#### Other variables (e.g. your iterable) must be @ instance or $ globals variables      
+#### e.g. @nums = [1,2,3]
+### l[for x in @nums do x ** 3 - 2 if @nums.sum < 6 end] #=> [-1, 6, 25]
 ### l[for num in $nums do num ** 3 - 2 if $nums.sum < 6 end] #=> [-1, 6, 25]
+### l[for x in (1..10).map{@1**2} do x if x end] #=> [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 
 ## 1. List Comprehension Identity (Splat a range or call .entries on a hash)
 
