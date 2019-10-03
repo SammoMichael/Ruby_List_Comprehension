@@ -149,14 +149,14 @@ def *(args)
 # # p [1,2].map{@1+2}.sum
 # p l[for x in 1..10 do x if x.even? end].sum + l[for x in 5..50 do x if x.even? end].sum
 # p l[for x in 1..10 do x if x.even? end]
-# p l[for x in 1..10 do x if x.even? end]
-p [for j in 1..5 do for i in 1..5 do end end]
+p l[for x in 1..10 do x if x.even? end]
+# p [for j in 1..5 do for i in 1..5 do end end]
 # p l[[for j in 1..5 do end], for i in 1..5 do end]
 p l.op
-p (1..5).map{ [*1..5]}
-for j in 1..5 do $* << [*1..5] end
-p $*
-p l.nested
+# p (1..5).map{ [*1..5]}
+# for j in 1..5 do $* << [*1..5] end
+# p $*
+# p l.nested
 
 # p for x in 1..10 do x if x.even? end
 # p l.op
