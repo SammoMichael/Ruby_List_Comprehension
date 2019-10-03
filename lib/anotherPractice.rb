@@ -16,5 +16,5 @@ p     l[for n in 1..3 do {n.succ =>n} end]
 # $chars = "sammy".chars
 #
 # p l[for char in "sammy".chars do char+"!" end]
-$chars = %(a b c)
+$chars = 'abc'
 p l[for char in $chars.chars do char + "!" if char.ord> 30 end]

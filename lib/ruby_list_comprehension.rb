@@ -83,8 +83,10 @@ class ListComprehension
           return @iterable if @iterable.to_a.length == 1 && @iterable[0].length == 1
           arr += [' end']
         end
-          arr_copy = arr[0..-1]
-          arr_copy2 = arr[0..-1]
+        arr
+        arr_copy = arr[0..-1]
+        arr_copy2 = arr[0..-1]
+        arr_copy.join(' ')
         res = instance_eval(arr_copy.join(' '))
         return [] if res.nil?
       rescue SyntaxError => se
@@ -107,20 +109,23 @@ class ListComprehension
       @filterable = if_condition.join(' ')
       @mappable = map_condition.join(' ')
       if @nested
-        @mappable
         @nested_var = arr[arr.rindex('for')+1]
-        if @mappable.match?('do')
+        if list.scan('do').length >= 1
           @mappable = @mappable[@mappable.index('do')+3..-1]
+
         else
           @mappable = @mappable[@mappable.index(';')+3..-1]
         end
           @filterable = @filterable[0..-5]
-        return *@iterable if (@mappable == @nested_var || @mappable == '') && (@filterable == 'true' || @filterable == @nested_var)
 
+        if (@mappable == @nested_var || @mappable == '') && (@filterable == 'true' || @filterable == @nested_var || @filterable == '')
+          return @list_comp.flatten
+        end
       end
-      p @iterable
-      return @iterable if (@mappable == @var || @mappable == '') && (@filterable == 'true' || @filterable == @var)
 
+      if (@mappable == @var || @mappable == '') && (@filterable == 'true' || @filterable == @var) && @nested
+        return @list_comp
+      end
       # define a method to handle the transformation to list_comp
       self.class.send(:define_method, 'lc') do |arr|
       # if @nested
@@ -128,6 +133,7 @@ class ListComprehension
       #   @mappable = @mappable[@mappable.index('do')+3..-1]
       #   @filterable = @filterable[0..-5]
       # end
+      #
         if @mappable == @var || @mappable == @nested_var
           @op[@count] = 'filter'
           # p 'filter'
@@ -142,6 +148,8 @@ class ListComprehension
           @op[@count] = 'map'
           if @nested
             @op[@count] = ['flat_map', 'map']
+            p 'ere'
+            p @mappable
               return @list_comp.flat_map{|array| array.map{ |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@nested_var, x.to_s)) }}
           else
             return @list_comp.map { |x| x = "'#{x}'" if x.is_a? String; instance_eval(@mappable.gsub(@var, x.to_s)) }
@@ -177,6 +185,7 @@ class ListComprehension
           end
         end
       end
+
       list_comp = lc(arr)
       unless list_comp.is_a?(Array) || list_comp.is_a?(Hash)
         list_comp = [list_comp]
@@ -186,7 +195,9 @@ class ListComprehension
         return [list_comp]
       end
       @count += 1
+      # p list_comp
       @cache[list] = list_comp if @caching
+      return list_comp
     }
   end
 end
