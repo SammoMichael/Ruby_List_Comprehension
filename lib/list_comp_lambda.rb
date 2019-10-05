@@ -1,8 +1,78 @@
-@lambda = lambda { |*list_comp_args, **keyword_args, &bloc|
-  p bloc
-  p 'hi'
-  return [] unless list.is_a? String
-  p 'change'
+
+module Cream
+
+  def lam(args)
+    p args
+    $l[args]
+  end
+def validate_args(args)
+  p args.class.to_s
+  case args
+  when ->x{!x.is_a?(Array)}
+    raise ArgumentError.new 'Gremlins ate your list: ' + args.to_s
+  when args.length == 1
+  end
+  @@nested_depth = args.length
+  p @@nested_depth.to_s + ' nested depth'
+
+end
+  def regex_list_comp(args, i = 0, regex = %r{for (?<list#{i}>.+) end}, nested_hash = Hash.new{|h, k| h[k] = args[k].match(regex)})
+    nested_hash[i]
+  end
+
+  def comprehend_list(args)
+    args = [
+        'for x in 1..10 do end',
+        'for i in 2..20 do i end',
+        'for i in 3..30 do i end'
+    ]
+# keep track of last index for main parse to separate list in line
+    p validate_args args
+    args = [
+        'for x in 1..10 do end',
+        'for i in 2..20 do i end',
+        'for i in 3..30 do i end'
+    ]
+    lists = args.map.with_index { |arg, i|  regex_list_comp(args, i)[("list"+i.to_s).to_sym]}
+
+    args = [
+        'for x in 1..10 do end',
+        'for i in 2..20 do i end',
+        'for i in 3..30 do i end'
+    ]
+    # count = (args.length)
+    i = 0
+    regex = %r{for (?<list#{i}>.+) end}
+    match1 = args[0].match(regex)
+    p match1[0].split
+    p match1[:list0]
+    p match1[:list]
+    if args[0].match(regex)
+      matches[0][:list]
+    end
+    p matches
+    nests_hash = args.each_with_object({}).with_index{|(str, hash), i| match = str.match(regex); hash[i] = match }
+    nests_hash_v2 = Hash.new{|h, k| h[k] = args[k].match(regex)}
+    p nests_hash[0][:list0]
+    p  nests_hash_v2[0]
+    p nests_hash[0][:list0]
+    p nests_hash[0][:list0]
+    p nests_hash[0][:list0]
+    p matches[:list]
+    p nests_hash
+
+  end
+
+  $l = lambda { |list_comp_args|
+      comprehend_list(list_comp_args)
+
+
+
+  list1 = list_comp_args[0]
+  p list_comp_args
+  p list_comp_args
+  p keyword_args
+  # p 'change'
   @list = list.strip
   arr = @list.strip
   case list
@@ -148,5 +218,16 @@
 
   end
 }
+end
 
-p @lambda[for x in 1..10 do x end]
+class A
+  include Cream
+  def initialize
+  p $l[for x in 1..10 do x end]
+  end
+end
+
+a = A.new
+
+p @l[for x in 1..10 do x end]
+

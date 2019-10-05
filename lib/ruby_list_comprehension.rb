@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require 'readline'
+require 'list_comp_lambda'
 
 class ListComprehension
+  include Cream
   attr_accessor :cache, :caching, :mappable, :filterable, :iterable, :var, :list, :location, :line, :count, :nested, :nested_var, :file, :list_comp
   attr_reader :c, :version, :op, :cache_count, :filename
 
