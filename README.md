@@ -33,7 +33,7 @@
 
 ## 3. List Comprehension (Filter)
 #### `l[for x in 1..10 do x if x > 5 end]` 
-#### `l[for x in 1..10 do x 2 if x % 2 == 0 end]` 
+#### `l[for x in 1..10 do x if x % 2 == 0 end]` 
 
 ## 4. List Comprehension (FilterMap/Map&Compact for `Ruby <= 2.7`)
 #### `l[for x in 1..10 do x**2 if x > 5 end]` 
