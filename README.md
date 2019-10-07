@@ -5,6 +5,7 @@
 #### Ruby Gem home  https://rubygems.org/gems/ruby_list_comprehension
 #### Summary: List comprehensions are a flexible prototyping tool having iterations in multiple languages. While Ruby is already equipped with powerful enumerable methods, list comprehensions have some unique benefits: [] brackets make array return more intuitive, ruby_list_comprehension automatically determines whether to map, filter, or filter_map(>=2.7.0) which means less syntax to memorize, and beginners or experienced programmers from languages such as Python or Julia, where list comprehensions feature prominently, may find it easier to adapt to Ruby. 
 ## Instructions:
+# N.B. some changes in 0.2.0
 #### ~> gem install ruby_list_comprehension
 
 #### # require in IRB or Ruby file

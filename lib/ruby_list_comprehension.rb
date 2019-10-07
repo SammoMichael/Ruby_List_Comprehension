@@ -169,7 +169,7 @@ module RubyListComprehension
   end
 
   class ListComprehension
-    # include Singleton
+    include Singleton
     include RubyListComprehension
     attr_accessor :cache, :caching, :mappable, :filterable, :iterable, :var, :list, :location, :line, :count
     attr_accessor :flattener, :len, :nested, :nested_var, :file, :list_comp, :final_iterable_value
@@ -228,5 +228,5 @@ module RubyListComprehension
       @line
     end
   end
-  $l = ListComprehension.new
+  $l = ListComprehension.instance
 end
