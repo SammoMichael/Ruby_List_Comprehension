@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e12fec72-8147-4e30-b53e-c497388b4e62" name="Default Changelist" comment="refactor plan">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/home.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Denesting.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/interoperable.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/junto.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/module_test.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/regex.rb" afterDir="false" />
+    <list default="true" id="e12fec72-8147-4e30-b53e-c497388b4e62" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/RLC.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/backupold.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.2.0.gem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.2.1.gem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.2.2.gem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ruby_list_comprehension-0.2.4.gem" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/RubyListComprehension.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RubyListComprehension.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/list_comp_lambda.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/list_comp_lambda.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/interoperable.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/interoperable.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/junto.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/junto.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ruby_list_comprehension.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ruby_list_comprehension.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby_list_comprehension.gemspec" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -192,6 +196,8 @@
       <workItem from="1570000572927" duration="12981000" />
       <workItem from="1570060978009" duration="78440000" />
       <workItem from="1570230767461" duration="40349000" />
+      <workItem from="1570311290776" duration="5841000" />
+      <workItem from="1570406855248" duration="3956000" />
     </task>
     <task id="LOCAL-00001" summary="bugfix">
       <created>1569724689056</created>
@@ -214,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570120387583</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="iron out bugs">
+      <created>1570311333401</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1570311333402</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,21 +251,8 @@
     <MESSAGE value="bugfix" />
     <MESSAGE value="refactor plan" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/lib/ruby_list_comprehension.rb</url>
-          <line>34</line>
-          <properties a="-1">
-            <option name="block-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="iron out bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="iron out bugs" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RubyListComprehension@benchmark.rcov" NAME="benchmark Coverage Results" MODIFIED="1570006057619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
@@ -267,6 +267,6 @@
     <SUITE FILE_PATH="coverage/RubyListComprehension@anotherTest.rcov" NAME="anotherTest Coverage Results" MODIFIED="1570102435431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
     <SUITE FILE_PATH="coverage/RubyListComprehension@Denesting.rcov" NAME="Denesting Coverage Results" MODIFIED="1570210461551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
     <SUITE FILE_PATH="coverage/RubyListComprehension@junto.rcov" NAME="junto Coverage Results" MODIFIED="1570285202875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
-    <SUITE FILE_PATH="coverage/RubyListComprehension@interoperable.rcov" NAME="interoperable Coverage Results" MODIFIED="1570310796783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
+    <SUITE FILE_PATH="coverage/RubyListComprehension@interoperable.rcov" NAME="interoperable Coverage Results" MODIFIED="1570414184560" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" MODULE_NAME="RubyListComprehension" />
   </component>
 </project>

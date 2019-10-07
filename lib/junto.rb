@@ -10,14 +10,30 @@ I_REGEX = %r{for(?<parameter>.*)(?=in)in(?<iterable>.*)(?=do)do(?<identity>.+)(?
 
 ## todo refactor this mess
 def op_type(str)
+  if ("for " + str).match?(I_REGEX)
+    str = "for " + str
+  end
   match_map, match_filter_map, match_filter, match_identity = str.match(M_REGEX), str.match(FM_REGEX), str.match(F_REGEX), str.match(I_REGEX)
-  # p match_filter_map, match_filter, match_identity, match_map
+  # match_filter_map, match_filter, match_identity, match_map
+  # p match_identity
+  # p match_identity
+  # p match_identity
+  # p match_map
+  # p match_map
+  # p str.match(I_REGEX)
 
   if match_filter_map.nil? && match_filter.nil?
-    # p match_identity, match_map
+    p match_identity, match_map
     # p match_map[:mappable]
     # p match_map[:parameter]
-    if /\A\s*\Z/ === match_map[:mappable] || match_map[:mappable].strip == match_identity[:identity] || match_map[:mappable].strip == match_map[:parameter].strip
+    # p match_map
+    mappable = match_map[:mappable]
+    match_map[:mappable].match?('en ')
+    if match_map[:mappable].match?('en ')
+      mappable = match_map[:mappable].sub!('en ', '')
+      match_map[:mappable].methods
+    end
+    if /\A\s*\Z/ === mappable || mappable.strip == match_identity[:identity] || mappable.strip == match_map[:parameter].strip
       return :identity
     else
       return :map
@@ -67,26 +83,29 @@ def op_type(str)
   #   end
   # end
 end
-
   def denest_flattener(nested_list)
-  len = nested_list.split('for')[1..-1].length
-  return [nested_list] if len == 1
-
+  p 'something rotten here'
+  p nested_list
+  p len = nested_list.split('for')[1..-1].length
+  return nested_list if len <= 1
+  p 'hi'
   nested_list_array = nested_list.split('for')[0..-1]
   nested_list_array[-1] = nested_list_array[-1].split('end').join
   nested_list_array.map(&->x{"[for #{x[1..-1]} end]"})
 end
 
 def fetch_capture(data, name)
-  if data.names.include?(name)
-    return data[name.to_sym]
-  else
-    return -1
-  end
+  p data
+  p name
+  # if data.names.include?(name)
+  #   return data[name.to_sym]
+  # else
+  #   return -1
+  # end
 end
 
 def denest_matricizer(nested_list)
-  # p 'hihihithis method don" work'
+  p 'hihihithis method don" work'
   nested_list
   nested_list
   len = 0
@@ -105,6 +124,8 @@ end
 
 def create_protocol(denested_array, operator_array)
   operator_array.each_with_object({}).with_index do |(e, o), i|
+    p 'denested_array ' + denested_array.to_s
+    p denested_array.match(I_REGEX)
     case e
     when :filter
       o[i] = e, denested_array[i].match(F_REGEX)
@@ -121,14 +142,14 @@ def create_protocol(denested_array, operator_array)
 end
 
 def execute_comprehension(hash, flatten = true)
-  op_array = hash.values.map{|x,|x}
+  p op_array = hash.values.map{|x,|x}
+  p hash
   raise SyntaxError if op_array.empty?
 
   $process_str = ""
   match_data_array = hash.values.map{|_,x|x}
   "operator array: " + op_array.to_s
   "match data array: " + match_data_array.to_s
-  match_data_array == [match_data_array] if match_data_array.length == 1
   i = 0
   unfinished = true
   while unfinished
@@ -136,6 +157,8 @@ def execute_comprehension(hash, flatten = true)
     len = op_array.length
     current_op = op_array.pop
     current_data = match_data_array[i]
+    match_data_array
+    current_data
     $iterable_string = fetch_capture(current_data, 'iterable')
     $mappable = fetch_capture(current_data, 'mappable')
     $parameter = fetch_capture(current_data, 'parameter')
@@ -178,7 +201,7 @@ def execute_comprehension(hash, flatten = true)
   "process string: " + $process_str
   begin
     p current_op
-    # instance_eval($process_str)
+    instance_eval($process_str)
   rescue SyntaxError => e
     'List imcomprehensible :' + e.backtrace_locations.to_s
   end
@@ -231,10 +254,18 @@ class ListComprehension
       file_data = @file.readlines.map(&:chomp)
       @file.close
       @line = file_data[@location - 1].strip
+      p @line
       start = @line.index('l[')
+
       ending = @line[start..-1].index('end')
       full_line = @line
-      @line = @line[start+2...ending + 6].chop
+
+      p @line.match(/\[(.*)end\]/)
+      p @line
+      p @line
+      if @line.is_a? String
+        @line = [@line]
+      end
       list2 = full_line.split('l[')
       list2.each_with_index do |list, idx|
         if list.split[3] == iterable.to_s

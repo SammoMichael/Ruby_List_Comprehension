@@ -48,8 +48,14 @@ $a = 5
 #
 # p $l[for x in 1..10 do x + 2 end]
 # p $l[for x in 1..10 do    end]
-nums = 1..10
-p $l[for num  in nums do num end]
+# $nums = [[1,2,3],[4,5,6]]
+# p $l[for cool in $nums do for c in $nums do c end end]
 # p '   ;  '.match?(/(^A-Za-z1-9)/)
 
 # p /\A\s*\Z/ === " f"
+# a = $l[for x in ['a', 'b', 'c'] do p ('a'..x).map(&:ord) end]
+# a = $l[for x in [1,2,3] do x + 2 if x > 2 end]
+# a = $l[for x in ['a', 'b', 'c'] do x if x > 'a' end]
+# a = $l[for x in ['a', 'b', 'c'] do x if x > 'a' end]
+p $l[for x in 1..10 do x end]
+# p a

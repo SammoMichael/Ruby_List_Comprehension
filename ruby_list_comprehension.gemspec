@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ruby_list_comprehension'
-  s.version     = '0.1.6'
+  s.version     = '0.2.4'
   s.date        = '2019-10-02'
   s.summary     = 'Ruby List Comprehension'
   s.description = 'List Comprehensions for Ruby'
