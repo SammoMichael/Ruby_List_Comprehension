@@ -67,7 +67,7 @@
 `for x in [1,[1,2,3].reduce{|x,y|x+y}] do x if x end`  #(test if parser can distinguish hash {1=>1} from block {|x|x})
 
 ### Expanding support for nested comprehensions try it out let me know of any bugfixes needed
-`$l[[for j in 1..5 do end], for i in 1..5 do end] => [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]]`
+### `$l[[for j in 1..5 do end], for i in 1..5 do end] => [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], ### [1, 2, 3, 4, 5]]`
 =======
 ### ~> gem install ruby_list_comprehension
 
