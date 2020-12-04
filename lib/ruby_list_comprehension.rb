@@ -2,14 +2,17 @@
 require 'readline'
 require 'singleton'
 require 'set'
+
 module RubyListComprehension
   FM_REGEX = /for(?<parameter>.*)(?=in)in(?<iterable>.*)(?=do)do(?<mappable>.*)(?=if)if(?<filterable>.+)end/.freeze
   F_REGEX = /for(?<parameter>.*)(?=in)in(?<iterable>.*)(.+)do(.+)(?=if)if(?<filterable>.*)end/.freeze
   M_REGEX = /(?=for)for(?<parameter>.*)(?=in)in(?<iterable>.*)(?=do)do(?<mappable>.*)(?=end)end/.freeze
   I_REGEX = /for(?<parameter>.*)(?=in)in(?<iterable>.*)(?=do)do(?<identity>.+)(?=end)end/.freeze
 
+  private
+
   def fetch_capture(data, name)
-    data[name.to_sym] if data.names.include?(name.to_s)
+    data[name.to_sym] if data.names.include?(name.to_s) && !data.nil?
   end
 
   def op_type(str)
@@ -19,42 +22,40 @@ module RubyListComprehension
     match_identity = str.match(I_REGEX)
     parameter = fetch_capture(match_identity, :parameter)
     mappable = fetch_capture(match_map, :mappable)
-    if match_filter_map.nil? && match_filter.nil?
-      if parameter.strip == mappable.strip || /\A\s*\Z/ === mappable
-        return :identity
-      else
-        return :map
-      end
-    end
     map_condition = mappable.split('if')[0]
-    if fetch_capture(match_map, :mappable).include?('if') && !(parameter.strip == map_condition.strip || /\A\s*\Z/ === mappable)
-      return :filter_map
+
+    if match_filter_map.nil? && match_filter.nil? && (parameter.strip == mappable.strip || /\A\s*\Z/ === mappable)
+      return :identity
+    elsif match_filter_map.nil? && match_filter.nil?
+      return :map
+    end
+
+    if fetch_capture(match_map, :mappable).include?('if') &&
+      !(parameter.strip == map_condition.strip || /\A\s*\Z/ === mappable)
+      :filter_map
     else
       if match_identity[:parameter].strip == match_filter[:filterable].strip
         return :identity
       end
-      return :filter
+      :filter
     end
   end
 
   def denest_builder(nested_list)
-    nested_list
-    nested_list
-    len = 0
-    nested_list
-    fin = nested_list.split('[').delete_if{|x| x == ""}
-    fin = fin.map{|str|str[0..-1] + " end"}
-    fin = fin.join.split('],')
-    fin = fin.join.split(' end')
-    fin.map{|x|"#{x} end"}
+    nested_list.split('[')
+      .delete_if{|x| x == ""}
+      .map{|str|str[0..-1] + " end"}
+      .join.split('],')
+      .join.split(' end')
+      .map{|x|"#{x} end"}
   end
 
   def denest_flattener(nested_list)
-    nested_list
-    len = nested_list.index('for')
-    nested_list_array = nested_list.split(" end").join
-    nested_list_array.split(' end')
-    nested_list_array = nested_list_array.split('for')[1..-1].map!{|x|"for#{x} end"}
+    nested_list.split(" end")
+     .join
+     .split(' end')
+     .split('for')[1..-1]
+     .map!{|x|"for#{x} end"}
   end
 
   def create_protocol(denested_array, operator_array)
@@ -82,7 +83,6 @@ module RubyListComprehension
     i = 0
     until op_array.empty?
       current_data = match_data_array[i]
-      current_op = op_array[0]
       $iterable_string = fetch_capture(current_data, 'iterable')
       $mappable = fetch_capture(current_data, 'mappable')
       $parameter = fetch_capture(current_data, 'parameter')
@@ -97,64 +97,63 @@ module RubyListComprehension
         if !@nested
           return *$iterable
         elsif i.zero? && !@flattener
-          $process_str += "(#$iterable).map"
+          $process_str += "(#{$iterable}).map"
         elsif i.zero? && @flattener
-          $process_str += "(#$iterable).flat_map"
+          $process_str += "(#{$iterable}).flat_map"
         elsif !i.zero? && i != start_index
-          $process_str += "{(#$iterable).map"
+          $process_str += "{(#{$iterable}).map"
         elsif i == start_index
-          $process_str += "{(#$iterable_string).map(&:itself)"
+          $process_str += "{(#{$iterable_string}).map(&:itself)"
           $process_str += '}' * (start_index)
         elsif nested && i.zero? && !flatten
-          $process_str += "(#$iterable).map"
+          $process_str += "(#{$iterable}).map"
         elsif i != 0 && nested
-          $process_str += "(#$iterable_string).map"
+          $process_str += "(#{$iterable_string}).map"
         end
       when :map
         if i == 0
           $mappable = $parameter if /\A\s*\Z/ === $mappable
-          $process_str += "(#$iterable).map{|(#$parameter)|(#$mappable)}"
+          $process_str += "(#{$iterable}).map{|#{$parameter}|(#{$mappable})}"
         elsif i == 0 && flatten
           $mappable = $parameter if /\A\s*\Z/ === $mappable
-          $process_str += "(#$iterable).flat_map{|(#$parameter)|(#$mappable)"
+          $process_str += "(#{$iterable}).flat_map{|#{$parameter}|(#{$mappable})"
         elsif i == 0 && !flatten
           $mappable = $parameter if /\A\s*\Z/ === $mappable
-          $process_str += "(#$iterable).map{|(#$parameter)|(#$mappable)"
+          $process_str += "(#{$iterable}).map{|#{$parameter}|(#{$mappable})"
         elsif i == start_index
           $mappable = $parameter if /\A\s*\Z/ === $mappable
-          $process_str += "{(#$iterable).map{|(#$parameter)|(#$mappable)"
+          $process_str += "{(#{$iterable}).map{|#{$parameter}|(#{$mappable})"
           $process_str += '}' * (start_index+1)
         elsif i != start_index
-          $process_str += "{(#$iterable_string).map{|(#$parameter)|(#$mappable)"
+          $process_str += "{(#{$iterable_string}).map{|#{$parameter}|(#{$mappable})"
         end
       when :filter
         if op_array.empty?
-          $process_str += "(#$iterable).filter{|(#$parameter)|(#$filterable)}"
+          $process_str += "(#{$iterable}).filter{|#{$parameter}|(#{$filterable})}"
         end
       when :filter_map
         if op_array.empty? && RUBY_VERSION >= '2.7.0'
-          $process_str += "(#$iterable).filter_map{|(#$parameter)|(#$mappable)  if  (#$filterable)}"
+          $process_str += "(#{$iterable}).filter_map{|#{$parameter}|(#{$mappable})  if  (#{$filterable})}"
         else
-          $process_str += "(#$iterable).map{|(#$parameter)|(#$mappable)  if  (#$filterable)}.compact"
+          $process_str += "(#{$iterable}).map{|#{$parameter}|(#{$mappable})  if  (#{$filterable})}.compact"
         end
       end
       i += 1
-      # p $process_str
     end
     begin
-      current_op
       instance_eval($process_str)
     rescue SyntaxError => e
-      'List imcomprehensible :' + e.backtrace_locations.to_s
+      "List incomprehensible: #{e.backtrace_locations.to_s}"
+    rescue Error => e
+      "Check your assumptions, something is amiss: #{e.backtrace_locations.to_s}"
     end
   end
 
   def one_shot(str)
     len = str.scan('for ').length
-    @nested = (len > 1)
-    nested = @nested
-    if nested
-      nest_mode = str.include?('end end') && !nested ? :flatten : :matrix
+    @nested = len > 1
+    if @nested
+      nest_mode = str.include?('end end') && !@nested ? :flatten : :matrix
       nest_array = @flattener ? denest_flattener(str) : denest_builder(str)
     else
       nest_array = [str]
@@ -162,7 +161,7 @@ module RubyListComprehension
     op_array = nest_array.map(&method(:op_type))
     hash = create_protocol(nest_array, op_array)
     begin
-      execute_comprehension(hash, nest_mode==nested)
+      execute_comprehension(hash, nest_mode==@nested)
     rescue SyntaxError => se
       puts 'RESCUED!' + se.backtrace_locations.to_s
     end
@@ -171,35 +170,32 @@ module RubyListComprehension
   class ListComprehension
     include Singleton
     include RubyListComprehension
-    attr_accessor :cache, :caching, :mappable, :filterable, :iterable, :var, :list, :location, :line, :count
-    attr_accessor :flattener, :len, :nested, :nested_var, :file, :list_comp, :final_iterable_value
-    attr_accessor :count
-    REPL_LIST = %w[:irb :pry].freeze
+    attr_accessor :cache, :mappable, :filterable, :line, :flattener
 
-    def initialize
-      @cache = {}
-      @caching = true
-      @version = RUBY_VERSION
-    end
+    :TOO_MANY_COMPS_ON_ONE_LINE
 
     def [](*iterable)
       return [] if iterable.empty? || iterable.nil?
 
-
       @flattener = iterable.length == 1
-      iterable = iterable[0] if iterable.length == 1
-      @final_iterable_value = iterable
-      @list_comp = iterable
-      $iterable = iterable
+      $iterable = iterable[0] if iterable.length == 1
+
       @filename = $PROGRAM_NAME
       if @filename == "pry" || @filename == "irb"
         @line = locate_list_repl
       else
         @line = locate_list_file
       end
+      return @line if @line == :TOO_MANY_COMPS_ON_ONE_LINE
       return @cache[@line] if @cache.has_key?(@line)
 
       @cache[@line] = one_shot(@line)
+    end
+
+    private
+
+    def initialize
+      @cache = {}
     end
 
     def locate_list_repl
@@ -217,14 +213,10 @@ module RubyListComprehension
     end
 
     def locate_list_file
-      @location = caller_locations.last.to_s.scan(/\d+/).last.to_i
-      @line = retrieve_file_data[@location - 1].strip.match(/\$l(?<line>.+)/)[:line][0...-1]
-      # if @line.is_a? Array
-      #   @line.each_with_index do |list, idx|
-      #   list.split[3] == iterable.to_s
-      #   @line = list[0..list.index('end]') + 2] if list.split[3] == iterable.to_s
-      #   end
-      # end
+      @line = retrieve_file_data[caller_locations.last.to_s.scan(/\d+/).last.to_i - 1]
+                .strip.match(/\$l(?<line>.+)/)[:line][0...-1]
+                .sub(";", " do ")
+      @line = :TOO_MANY_COMPS_ON_ONE_LINE if @line.include?("$l")
       @line
     end
   end
