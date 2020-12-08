@@ -4,6 +4,7 @@
 # Translates to: (1..10).filter_map {|x| Math.sqrt(x) if (x**2).even? }
 
 #A whole new syntax for intelligently expressing filter, map, or filter_map with built-in caching 
+![Pry Example](https://github.com/SammoMichael/Ruby_List_Comprehension/blob/master/Screen%20Shot%202020-12-08%20at%204.01.39%20PM.png)
 
 [![Gem Version](https://badge.fury.io/rb/ruby_list_comprehension.svg)](https://badge.fury.io/rb/ruby_list_comprehension)
 ### Ruby Tracker Feature request page https://bugs.ruby-lang.org/issues/16147 
